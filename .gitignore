@@ -31,3 +31,6 @@ bazelci.py
 
 # rust-analyzer
 rust-project.json
+
+# IntelliJ
+.ijwb/

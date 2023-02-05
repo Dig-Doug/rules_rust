@@ -1,5 +1,6 @@
 load("@crate_index_cargo_workspace//:defs.bzl", "crate_deps")
-load("@rules_rust//rust:defs.bzl", "rust_library")
+load("@rules_rust//rust:defs.bzl", "rust_library", "rust_shared_library")
+load("@rules_rust//wasm_bindgen:wasm_bindgen.bzl", "rust_wasm_bindgen")
 
 package(default_visibility = ["//visibility:public"])
 
@@ -9,5 +10,21 @@ rust_library(
     edition = "2018",
     deps = crate_deps([
         "rand",
+        "wgpu",
     ]),
+)
+
+rust_shared_library(
+    name = "rng_shared",
+    srcs = ["src/lib.rs"],
+    edition = "2018",
+    deps = crate_deps([
+        "rand",
+        "wgpu",
+    ]),
+)
+
+rust_wasm_bindgen(
+    name = "rng_bindgen",
+    wasm_file = ":rng_shared",
 )
